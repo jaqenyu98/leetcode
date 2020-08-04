@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numIdenticalPairs(vector<int>& nums) {
+        unordered_map<int, int> a;
+        for(int i: nums)
+        {
+             ++a[i];
+        }
+        int rst = 0;
+        for(auto it = a.begin(); it!=a.end(); it++)
+        {
+            int num = it->second;
+            rst += num*(num-1)/2;
+        }
+        return rst;
+    }
+};
