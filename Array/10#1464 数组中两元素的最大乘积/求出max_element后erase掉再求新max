@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {      
+        auto it1 = max_element(nums.begin(), nums.end());
+        int max1 = *it1 - 1; //迭代器记的是位置，所以如果erase掉it1这个元素的话，it1指向的数据会变成它原本的后一个，所以要在erase之前把it1的值记录下来。
+        nums.erase(it1);
+        auto it2 = max_element(nums.begin(), nums.end());
+        int max2 = *it2 - 1;
+        return max1 * max2;
+    }
+};
