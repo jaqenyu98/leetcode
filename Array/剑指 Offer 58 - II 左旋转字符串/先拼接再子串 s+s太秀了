@@ -1,0 +1,7 @@
+class Solution {
+public:
+    string reverseLeftWords(string s, int n) {
+        return (s+s).substr(n, s.size());
+    }
+};
+//先拼接再子串 s+s太秀了
