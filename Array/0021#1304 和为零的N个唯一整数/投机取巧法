@@ -1,0 +1,13 @@
+class Solution {
+public:
+    vector<int> sumZero(int n) {
+        vector<int> rst;
+        for(int i=0; i<n-1; ++i)
+        {
+            rst.push_back(i);
+        }
+        int sum = (n-2)*(n-1)/2;
+        rst.push_back(-sum);
+        return rst;
+    }
+};
