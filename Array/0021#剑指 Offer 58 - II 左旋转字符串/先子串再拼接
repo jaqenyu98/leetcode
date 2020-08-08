@@ -1,9 +1,0 @@
-class Solution {
-public:
-    string reverseLeftWords(string s, int n) {
-        string str = s.substr(n);
-        str.append(s, 0, n);
-        return str;
-    }
-};
-//先子串再拼接
