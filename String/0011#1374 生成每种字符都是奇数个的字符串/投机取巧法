@@ -1,0 +1,12 @@
+class Solution {
+public:
+    string generateTheString(int n) {
+        string rst = "a";
+        if(n%2==0)
+            rst.append(n-1, 'b');
+        else
+            rst.append(n-1, 'a');
+        return rst;
+    }
+};
+//投机取巧法
