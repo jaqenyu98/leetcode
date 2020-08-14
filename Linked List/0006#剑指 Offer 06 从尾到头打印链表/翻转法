@@ -1,0 +1,14 @@
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        vector<int> rst;
+        auto p = head;
+        while (p != nullptr) {
+            rst.emplace_back(p->val);
+            p = p->next;
+        }
+        reverse(rst.begin(), rst.end());
+        return rst;
+    }
+};
+//翻转法
