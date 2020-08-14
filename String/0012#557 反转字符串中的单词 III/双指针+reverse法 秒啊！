@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int front = 0, back = 0; //front为要反转的单词的首字母，back为要反转的单词的末字母的下一位
+        for(auto x: s)
+        {
+            if(x!=' ')
+                ++back;
+            else
+            {
+                reverse(s.begin()+front, s.begin()+back);
+                ++back;
+                front = back;             
+            }
+        }
+        reverse(s.begin()+front, s.begin()+back); //最后没有空格，所以最后一个单词还没翻转。
+        return s;
+    }
+};
+//双指针+reverse法 秒啊！
