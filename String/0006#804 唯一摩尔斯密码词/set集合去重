@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int uniqueMorseRepresentations(vector<string>& words) {
+        string morseCode[] = {".-","-...","-.-.","-..",".","..-.","--."
+        ,"....","..",".---","-.-", ".-..","--","-.","---",".--.","--.-"
+        ,".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        unordered_set<string> uset;
+        for(int i=0; i<words.size(); ++i)
+        {
+            string str;
+            for(int j=0; j<words[i].size(); ++j)
+            {
+		    	str += morseCode[words[i][j]-'a'];
+            }
+            uset.insert(str);
+        }
+	    return uset.size();    
+    }
+};
+//set集合去重
