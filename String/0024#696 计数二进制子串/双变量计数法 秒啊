@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countBinarySubstrings(string s) {
+        int rst = 0;
+        int cur = 1, pre = 0; //000111100
+        for (int i = 0; i < s.size() - 1; ++i)
+        {
+            if (s[i] == s[i + 1])
+                ++cur;
+            else
+            {
+                pre = cur;
+                cur = 1;
+            }
+            if (pre >= cur)
+                ++rst;
+        }
+        return rst;
+    }
+};
+//双变量计数法 秒啊
