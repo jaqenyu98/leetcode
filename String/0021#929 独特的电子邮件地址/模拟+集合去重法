@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int numUniqueEmails(vector<string>& emails) {
+        unordered_set<string> uset; //集合，去重用
+        for(int i=0; i<emails.size(); ++i)
+        {
+            size_t a = emails[i].find("@", 0); //找到@符号的位置
+            size_t b = emails[i].find("+", 0); //找到第一个+的位置
+            if(b < a) 
+            {
+                emails[i].erase(b, a-b); //如果+在@前面，则删掉二者之间的内容
+                a = b; //删掉之后@的位置坐标变成了删之前+的位置坐标。
+            }
+            size_t c = emails[i].rfind(".", a); //找到@前面的.
+            while(c!=string::npos)
+            {
+                emails[i].erase(c, 1); //删除找到的.
+                --a; //由于删掉了一个.需要更新@的位置
+                c = emails[i].rfind(".", a); //继续找.直到找不到
+            }
+            uset.emplace(emails[i]); //将处理后的邮箱地址放入集合，去重
+        }
+        return uset.size(); //集合中元素的数量即为结果
+    }
+};
+//模拟+集合去重法
