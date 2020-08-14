@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool judgeCircle(string moves) {
+        int temp1 = 0, temp2 = 0;
+        for(auto c: moves)
+        {
+            switch(c)
+            {
+                case 'U':
+                    ++temp1;
+                    break;
+                case 'D':
+                    --temp1;
+                    break;
+                case 'L':
+                    --temp2;
+                    break;
+                case 'R':
+                    ++temp2;
+                    break;
+            }
+        }
+        return !temp1 && !temp2;
+
+    }
+};
+//平衡抵消法
