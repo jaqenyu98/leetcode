@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int upperBound(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left<=right) {
+            int mid = left + ((right-left)>>1);
+            if (nums[mid]<=target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (left==0 || nums[left-1]!=target) //注意一定要先判断left是否等于0
+            return -1; 
+        return left - 1;
+    }
+    int lowerBound(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left<=right) {
+            int mid = left + ((right-left)>>1);
+            if (nums[mid]>=target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        if (right==nums.size() - 1 || nums[right+1]!=target) //注意一定要先判断right是否是最后一个元素
+            return -1;
+        return right + 1;
+    }   
+    int search(vector<int>& nums, int target) {
+        int u = upperBound(nums, target);
+        int l = lowerBound(nums, target);
+        if (u!=-1 && l!=-1)
+            return u - l + 1;
+        else
+            return 0;
+    }
+};
