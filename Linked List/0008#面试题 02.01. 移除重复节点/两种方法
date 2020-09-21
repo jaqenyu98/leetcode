@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeDuplicateNodes(ListNode* head) {
+        if (head==nullptr) return head;
+        unordered_set<int> uset;
+        ListNode* p = head;
+        uset.insert(p->val);
+        while (p->next!=nullptr) {
+            //每次看的是p->next的值，这样就可以只用一个指针就删掉重复节点了。
+            //否则，如果看的是p的值，还需要一个指针指向p前面的节点才能删掉p节点
+            if (!uset.count(p->next->val)) {
+                uset.insert(p->next->val);
+                p = p->next;
+            } else {
+                ListNode* tmp = p->next;
+                p->next = p->next->next;
+                delete tmp;
+            }
+        }
+        return head;
+    }
+};
+//集合法
+
+class Solution {
+public:
+    ListNode* removeDuplicateNodes(ListNode* head) {
+        if (head == nullptr) return head;
+        ListNode* left = head;
+        while (left != nullptr) {
+            ListNode* right = left;
+            while (right->next != nullptr) {
+                //每次比较的是right->next的值，这样就可以只用一个指针就删掉重复节点了。
+                //否则，如果比较的是right的值，还需要一个指针指向right前面的节点才能删掉right节点
+                if (left->val == right->next->val) {
+                    ListNode* tmp = right->next;
+                    right->next = right->next->next;
+                    delete tmp;
+                }
+                else {
+                    right = right->next;
+                }
+            }
+            left = left->next;
+        }
+        return head;
+    }
+};
+//双指针法
