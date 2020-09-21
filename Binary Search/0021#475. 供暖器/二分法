@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        int ans = 0;
+        sort(heaters.begin(), heaters.end());
+        for (int i=0; i<houses.size(); ++i) {
+            int left = 0, right = heaters.size() - 1;
+            if (heaters[left]>=houses[i]) {
+                int tmp = heaters[left] - houses[i];
+                ans = max(ans, tmp);
+                continue;
+            } else if (heaters[right]<=houses[i]) {
+                int tmp = houses[i] - heaters[right];
+                ans = max(ans, tmp);
+                continue;
+            }
+            while (left<=right) {
+                int mid = left+(right-left)/2;
+                if (heaters[mid]>houses[i]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            int tmp = min(houses[i]-heaters[right], heaters[right+1]-houses[i]);
+            ans = max(ans, tmp);
+        }
+        return ans;
+    }
+};
+//二分法
+//这题一定不能想当然。
