@@ -1,0 +1,58 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
+        ListNode* ans = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return ans;
+    }
+};
+//递归法，秒啊
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* front = nullptr;
+        while (head != nullptr) {
+            ListNode* back = head->next;  //front head back三个指针
+            head->next = front;
+            front = head;
+            head = back;
+        }
+        return front;
+    }
+};
+//双指针法（back指针是工具233）
+//这是最省空间和时间的方法，建议熟记，因为反转链表很常用。
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* p = head;
+        vector<int> v;
+        while (p != nullptr) {
+            v.emplace_back(p->val);
+            p = p->next;
+        }
+        p = head;
+        int i = v.size() - 1;
+        while (p != nullptr) {
+            p->val = v[i];
+            p = p->next;
+            --i;
+        }
+        return head;
+    }
+};
+//数组记录法
