@@ -1,0 +1,18 @@
+class Solution {
+public:
+    static bool cmp(int i, int j) {
+        return i>j;
+    }
+    vector<int> minSubsequence(vector<int>& nums) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        sort(nums.begin(), nums.end(), cmp);
+        int i = 0;
+        int subsum = 0;
+        while (subsum<=sum-subsum) {
+            subsum += nums[i];
+            ++i;
+        }
+        return vector<int>(nums.begin(), nums.begin()+i);
+    }
+};
+//sort
