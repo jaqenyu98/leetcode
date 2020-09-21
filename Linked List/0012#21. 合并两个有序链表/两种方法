@@ -1,0 +1,63 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        //不用哑节点的话，初始化较为麻烦
+        /*if (l1==nullptr) return l2;
+        if (l2==nullptr) return l1;
+        ListNode* rst = nullptr;
+        if (l1->val>l2->val) {
+            rst = l2;
+            l2 = l2->next;
+        } else {
+            rst = l1;
+            l1 = l1->next;
+        }
+        auto p = rst; */
+        ListNode* dummy = new ListNode(-1); //哑节点
+        ListNode* p = dummy;
+        while (l1 != nullptr && l2 != nullptr) {
+            if (l1->val > l2->val) {
+                p->next = l2;
+                l2 = l2->next;
+            }
+            else {
+                p->next = l1;
+                l1 = l1->next;
+            }
+            p = p->next;
+        }
+        p->next = l1 == nullptr ? l2 : l1;
+        auto ans = dummy->next;
+        delete dummy; //注意内存泄漏
+        return ans;
+    }
+}; //循环+哑节点法
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1==nullptr) return l2;
+        if (l2==nullptr) return l1;
+        if (l1->val>l2->val) {
+            l2->next = mergeTwoLists(l1, l2->next);
+            return l2;
+        } else {
+            l1->next = mergeTwoLists(l1->next, l2);\
+            return l1;
+        }
+    }
+}; 
+//递归法
+//1. 明确函数返回的是什么：函数返回的是“升序”的链表，也就是说每次返回，都返回一个从小到大排好序的链表。
+//2. 递归是自上而下的，将大问题分解为无数个小问题，当最后满足边界条件后，会返回一个个排好序的小链表，最终得到一个排好序的大链表。
+//3. 先从函数前进段开始想，最后想边界。
