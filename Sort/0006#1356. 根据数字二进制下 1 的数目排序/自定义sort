@@ -1,0 +1,23 @@
+class Solution {
+public:
+    //统计1的个数
+    static int cnt(int a) {
+        int cnt = 0;
+        while (a!=0) {
+            cnt += a%2;
+            a >>= 2;
+        }
+        return cnt; 
+    }
+
+    //自定义的比较函数
+    static bool cmp(int a, int b) {
+        return cnt(a)==cnt(b) ? a<b : cnt(a)<cnt(b);
+    }
+
+    vector<int> sortByBits(vector<int>& arr) {
+        sort(arr.begin(), arr.end(), cmp);
+        return arr;
+    }
+};
+//sort函数的巧用
