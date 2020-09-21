@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> ump;
+        vector<int> ans;
+        for (int x: nums1) {
+            ump[x] += 1;
+        }
+        for (int x: nums2) {
+            if (ump[x]!=0) {
+                ans.emplace_back(x);
+                ump[x] -= 1;
+            } 
+        }
+        return ans;
+    }
+};
+//map计数法O(m+n)
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> ans;
+        sort(nums1.begin(), nums1.end());
+        for (int i = 0; i < nums2.size(); ++i) {
+            int left = 0, right = nums1.size() - 1;
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (nums1[mid] == nums2[i]) {
+                    ans.push_back(nums1[mid]);
+                    nums1.erase(nums1.begin() + mid);
+                    nums2.erase(nums2.begin() + i);
+                    --i;
+                    break;
+                }
+                else if (nums1[mid] > nums2[i]) {
+                    right = mid - 1;
+                }
+                else {
+                    left = mid + 1;
+                }
+            }
+        }
+        return ans;
+    }
+};
+//二分查找法O(mlog2n)
