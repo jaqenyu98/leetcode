@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& A) {
+        vector<int> ans(A.size(), 0);
+        int even = 0, odd = 1;
+        for (int x: A) {
+            if (x%2==0) {
+                ans[even] = x;
+                even += 2;
+            } else {
+                ans[odd] = x;
+                odd += 2;
+            }
+        }
+        return ans;
+    }
+};
+//空间O(n)法
+
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& A) {
+        int even = 0, tool = 1;
+        while (even < A.size()) {
+            if (A[even] % 2) {
+                while (tool < A.size() && A[tool] % 2)
+                    tool += 2;
+                swap(A[even], A[tool]);
+            }
+            else {
+                even += 2;
+            }
+        }
+        return A;
+    }
+};
+//空间O(1)法
