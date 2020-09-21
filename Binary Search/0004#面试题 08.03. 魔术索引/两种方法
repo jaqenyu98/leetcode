@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int findMagicIndex(vector<int>& nums) {
+        for(int i=0; i<nums.size(); ){
+            if(nums[i]==i) {
+                return i;
+            } else if (nums[i]>i) {               
+                //如果nums[i]大，那么[i, nums[i]-1]之间不可能有和nums[i]相等的
+                i = nums[i];
+            } else {
+                i = i + 1;
+            }
+            //可以简化为下面这个。但上面的好理解。
+            //i = max(nums[i],i+1);
+        }
+        return -1;
+    }
+};
+//跳跃查找法
+
+class Solution {
+public:
+    int findMagicIndex(vector<int>& nums) {
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] == i)
+                return i;
+        }
+        return -1;
+    }
+};
+//暴力法
