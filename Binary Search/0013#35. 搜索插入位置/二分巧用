@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left<=right) {
+            int mid = left + (right-left)/2;
+            if (nums[mid]>=target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+};
+//二分法
+//左边界：如果没有：left是插入位置，right是插入位置前一个；如果有：left是最左边，right是最左边的前一个
+//右边界：如果没有：left是插入位置，right是插入位置前一个；如果有：left是最右边的后一个，right是最右边
