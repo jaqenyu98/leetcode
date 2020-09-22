@@ -1,0 +1,56 @@
+class Solution {
+public:
+	vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+		int max_value = arr1[0], min_value = arr1[0];
+		for (int x : arr1) {
+			max_value = max(max_value, x);
+			min_value = min(min_value, x);
+		}
+		vector<int> buckets(max_value - min_value + 1, 0);
+		for (int x : arr1) {
+			++buckets[x - min_value];
+		}
+		int arr1_index = 0;
+		for (int x : arr2) {
+			while (buckets[x - min_value] > 0) {
+				arr1[arr1_index++] = x;
+				--buckets[x - min_value];
+			}
+		}
+		for (int i = 0; i < buckets.size(); ++i) {
+			while (buckets[i] > 0) {
+				arr1[arr1_index++] = i + min_value;
+				--buckets[i];
+			}
+		}
+		return arr1;
+	}
+};
+//计数排序思想
+
+class Solution {
+public:
+	vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+		unordered_map<int, int> umap;
+		for (int i = 0; i < arr2.size(); ++i) {
+			umap.emplace(arr2[i], i);
+		}
+		auto cmp = [&umap](int x, int y)->bool {
+			if (umap.count(x) && umap.count(y)) {
+				return umap[x] < umap[y];
+			}
+			else if (umap.count(x) && !umap.count(y)) {
+				return true;
+			}
+			else if (!umap.count(x) && umap.count(y)) {
+				return false;
+			}
+			else { //!umap.count(x) && !umap.count(y)
+				return x < y;
+			}
+		};
+		sort(arr1.begin(), arr1.end(), cmp);
+		return arr1;
+	}
+};
+//sort配合lambda表达式
