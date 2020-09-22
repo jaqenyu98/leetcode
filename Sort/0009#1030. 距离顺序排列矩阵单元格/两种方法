@@ -1,0 +1,50 @@
+class Solution {
+public:
+	vector<vector<int>> allCellsDistOrder(int R, int C, int r0, int c0) {
+		vector<vector<int>> ans;
+		//0<=x<R, 0<=y<C
+		for (int i = 0; i < R; ++i) {
+			for (int j = 0; j < C; ++j) {
+				ans.push_back({ i, j });
+			}
+		}
+		sort(ans.begin(), ans.end(), [r0, c0](vector<int>a, vector<int>b)->bool {
+			return abs(a[0] - r0) + abs(a[1] - c0) < abs(b[0] - r0) + abs(b[1] - c0);
+			});
+		return ans;
+	}
+};
+//sort+lambda
+
+class Solution {
+public:
+	vector<vector<int>> allCellsDistOrder(int R, int C, int r0, int c0) {
+		vector<vector<int>> ans;
+		//正负号处理，减少代码量
+		int sign[2] = { -1,1 };
+		ans.push_back({ r0, c0 });
+		//0<=x<R, 0<=y<C
+		for (int dis = 1; ans.size() < R * C; ++dis) {
+			for (int r_dis = 0; r_dis <= dis; ++r_dis) {
+				int c_dis = dis - r_dis;
+				//r0+-rdis c0+-cdis 
+				for (int i = 0; i < 2; ++i) {
+					int r = r0 + sign[i] * r_dis;
+					for (int j = 0; j < 2; ++j) {
+						int c = c0 + sign[j] * c_dis;
+						if (r >= 0 && r < R && c >= 0 && c < C)
+							ans.push_back({ r,c });
+						//当c_dis=0时，加减都一样，会重复
+						if (c_dis == 0)
+							break;
+					}
+					//当r_dis=0时，加减都一样，会重复
+					if (r_dis == 0)
+						break;
+				}
+			}
+		}
+		return ans;
+	}
+};
+//BFS
